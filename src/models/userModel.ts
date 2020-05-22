@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -29,9 +30,16 @@ const userSchema = new mongoose.Schema({
             return true;
         }
     },
+    tokens: [{
+        token: {
+            required: true,
+            type: String
+        }
+    }],
 })
 
 interface IUserSchema extends mongoose.Document {
+    generateAuthToken(): string,
     name: string,
     email: string,
     password: string,
@@ -72,5 +80,22 @@ userSchema.statics.findByCredentials = async (email: string, password: string) =
     return user
 }
 
-const User = mongoose.model<IUserSchema>('User', userSchema);
+// Generate a authentication token using jsonwebtoken
+userSchema.methods.generateAuthToken = async function() {
+    // TODO: replace with environment variable
+    const secret = "secret"
+    const token = jwt.sign({ _id: this._id.toString() }, secret)
+
+    // Add token to the list of tokens on the user object
+    this.tokens = this.tokens.concat({token})
+    await this.save()
+    return token
+}
+
+interface IUserModel extends mongoose.Model<IUserSchema> {
+    findByCredentials(email: string, password: string): Promise<IUserModel>,
+    generateAuthToken(): string
+}
+
+const User = mongoose.model<IUserSchema, IUserModel>('User', userSchema);
 export default User;

@@ -1,5 +1,6 @@
 import express from 'express';
 import userRouter from './routers/user_router';
+import exerciseRouter from './routers/exerciseRouter';
 import mongoose from 'mongoose';
 
 const dbURL = "mongodb://127.0.0.1:27017/exercise-tracker-test";
@@ -23,10 +24,11 @@ const app = express()
 app.use(express.json())
 
 // Add routers to project 
-app.use(userRouter)
+app.use(userRouter);
+app.use(exerciseRouter);
 
 app.get("/", function (req: any, res: any) {
     res.send("Hello World!");
-    });
+});
 
 export default app;
