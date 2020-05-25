@@ -3,7 +3,7 @@ import userRouter from './routers/user_router';
 import exerciseRouter from './routers/exerciseRouter';
 import mongoose from 'mongoose';
 
-const dbURL = "mongodb://127.0.0.1:27017/exercise-tracker-test";
+const dbURL = process.env.MONGODB_URL || "";
 
 mongoose.connect(dbURL, {
     useNewUrlParser: true,
@@ -11,14 +11,6 @@ mongoose.connect(dbURL, {
 });
 
 const app = express()
-
-// Middleware for express example
-// app.use((req, res, next) => {
-//     console.log(req.method, req.path)
-
-//     // Call next for the correct router to be called and finsh request
-//     next()
-// })
 
 // Automatically parse JSON to object on req.body
 app.use(express.json())

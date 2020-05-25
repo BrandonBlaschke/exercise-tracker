@@ -82,8 +82,7 @@ userSchema.statics.findByCredentials = async (email: string, password: string) =
 
 // Generate a authentication token using jsonwebtoken
 userSchema.methods.generateAuthToken = async function() {
-    // TODO: replace with environment variable
-    const secret = "secret"
+    const secret = process.env.JWT_SECRET || "";
     const token = jwt.sign({ _id: this._id.toString() }, secret)
 
     // Add token to the list of tokens on the user object

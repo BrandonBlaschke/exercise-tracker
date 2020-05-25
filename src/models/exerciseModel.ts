@@ -55,16 +55,32 @@ interface IExerciseModel extends mongoose.Model<IExerciseSchema> {
     updateDataPoint(name: string, dataPoint: any, index: number): undefined
 }
 
+/**
+ * Add data point to this exercise.
+ * @param date: Date of data point.
+ * @param data: Data of data point.
+ * @param notes: Any notes on for the data point that could be added.
+ */
 exerciseSchema.methods.addDataPoint = async function(date: Date, data: number, notes: string) {
     this.dataPoints.push({date, data, notes});
     await this.save();
 }
 
+/**
+ * Delete a data point.
+ * @param index: Index number in dataPoints array to remove
+ */
 exerciseSchema.methods.deleteDataPoint = async function(index: number) {
     this.dataPoints.splice(index, 1);
     await this.save();
 }
 
+/**
+ * Update data point
+ * @param name: Name of the data point to change or leave same.
+ * @param dataPoint: Data point object to save.
+ * @param index: Index number for dataPoints array to save to.
+ */
 exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint: any, index: number) {
     this.name = name;
     this.dataPoints[index] = dataPoint;

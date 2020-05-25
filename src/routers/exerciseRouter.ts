@@ -5,6 +5,12 @@ import express from 'express';
 const exerciseRouter = express.Router();
 
 // POST Create exercise
+/** Expects JSON data
+ * id: String, id of exercise
+ * name: String, name of exercise
+ * dataPoint: DataPoint object to be updated to
+ * unit: String, unit of dataPoint
+ */
 exerciseRouter.post('/exercise', auth, async (req: any, res: any) => {
     try {
         const exercise = new Exercise({
@@ -22,6 +28,11 @@ exerciseRouter.post('/exercise', auth, async (req: any, res: any) => {
 });
 
 // POST Add Data Point
+/** Expects these JSON values 
+ * date: Number: Date integer
+ * data: Number: Data for data point
+ * notes: String, notes to add with data point.
+ */
 exerciseRouter.post('/exercise/addData', auth, async (req: any, res: any) => {
     try {
         const exercise = await Exercise.findOne({"_id": req.body._id, "owner": req.user._id})
@@ -38,6 +49,7 @@ exerciseRouter.post('/exercise/addData', auth, async (req: any, res: any) => {
 })
 
 // DELETE Data Point
+// Query parameter id, represents id of exercise.
 exerciseRouter.delete('/exercise', auth, async (req: any, res: any) => {
     try {
         const exercise = await Exercise.findOne({"_id": req.query.id, "owner": req.user._id})
@@ -54,6 +66,7 @@ exerciseRouter.delete('/exercise', auth, async (req: any, res: any) => {
 })
 
 // GET Specific exercise
+// id route, id of exercise
 exerciseRouter.get('/exercise/:id', auth, async (req: any, res: any) => {
     try {
         const exercises = await Exercise.findOne({"_id": req.params.id, "owner": req.user._id});
@@ -82,6 +95,12 @@ exerciseRouter.get('/exercise', auth, async (req: any, res: any) => {
 })
 
 // PATCH Update Exercise
+/** Expects JSON data
+ * id: String, id of exercise
+ * name: String, name of exercise
+ * dataPoint: DataPoint object to be updated to
+ * index: Number, index of dataPoint in array.
+ */
 exerciseRouter.patch('/exercise', auth, async (req: any, res: any) => {
     try {
         const updates = Object.keys(req.body);

@@ -6,12 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc && node ./build/index.js",
-    "start-dev": "nodemon -e ts  --exec \"npm run compile\"",
+    "start-dev": "env-cmd -f ./config/dev.env nodemon -e ts  --exec \"npm run compile\"",
     "tsc": "tsc"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.1",
     "tslint": "^6.1.2"
@@ -26,6 +27,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.15",
+    "type-doc": "^0.1.41",
     "typescript": "^3.9.3",
     "validator": "^13.0.0"
   }
