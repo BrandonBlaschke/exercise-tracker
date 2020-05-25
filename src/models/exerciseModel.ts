@@ -26,7 +26,7 @@ const exerciseSchema = new mongoose.Schema({
             required: true
         },
         data: {
-            type: String,
+            type: Number,
             required: true,
         },
         notes: {
@@ -41,10 +41,35 @@ interface IExerciseSchema extends mongoose.Document {
     unit: string,
     dataPoints: [{
         date: Date,
-        data: string,
+        data: number,
         notes: string
-    }]
+    }],
+    addDataPoint(date: Date, data: number, notes: string): undefined,
+    deleteDataPoint(index: number): undefined,
+    updateDataPoint(name: string, dataPoint: any, index: number): undefined
 }
 
-const Exercise = mongoose.model<IExerciseSchema>('Exercise', exerciseSchema);
+interface IExerciseModel extends mongoose.Model<IExerciseSchema> {
+    addDataPoint(date: Date, data: number, notes: string): undefined,
+    deleteDataPoint(index: number): undefined,
+    updateDataPoint(name: string, dataPoint: any, index: number): undefined
+}
+
+exerciseSchema.methods.addDataPoint = async function(date: Date, data: number, notes: string) {
+    this.dataPoints.push({date, data, notes});
+    await this.save();
+}
+
+exerciseSchema.methods.deleteDataPoint = async function(index: number) {
+    this.dataPoints.splice(index, 1);
+    await this.save();
+}
+
+exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint: any, index: number) {
+    this.name = name;
+    this.dataPoints[index] = dataPoint;
+    await this.save();
+}
+
+const Exercise = mongoose.model<IExerciseSchema, IExerciseModel>('Exercise', exerciseSchema);
 export default Exercise;
