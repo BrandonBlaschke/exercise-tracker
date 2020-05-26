@@ -2,7 +2,7 @@ FROM node:latest
 WORKDIR /usr/src
 
 ENV PORT=3000
-ENV MONGODB_URL=mongodb+srv://exercise-tracker:pzsD9lpD0zXQjsq%21itG%29@cluster0-kt6dd.mongodb.net/data?retryWrites=true&w=majority
+ENV MONGODB_URL=mongodb://127.0.0.1:27017/exercise-tracker-test
 ENV JWT_SECRET=jddfj&^$#@sNFj
 
 COPY . ./
