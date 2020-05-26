@@ -8,6 +8,5 @@ ENV JWT_SECRET=jddfj&^$#@sNFj
 COPY . ./
 RUN npm install
 RUN npm run build
-# RUN ls build/src
 CMD node ./build/src/index.js
 
