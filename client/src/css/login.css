@@ -53,6 +53,13 @@
   font-size: 12px;
 }
 
+.form .errorMessage {
+  margin: 2px 0 0 10px;
+  color: #bd0c0c;
+  font-size: 12px;
+  float: left;
+}
+
 .form .message a {
   color: #4CAF50;
   text-decoration: none;
