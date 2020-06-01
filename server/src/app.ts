@@ -21,8 +21,9 @@ app.use(userRouter);
 app.use(exerciseRouter);
 app.use(express.static(path.join(__dirname, "../..", "client/build")));
 
-app.get("/test", function (req: any, res: any) {
-    res.send("Hello World!2");
+// Redirect all requests back to index.html
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../..", "client/build/index.html"));
 });
 
 export default app;

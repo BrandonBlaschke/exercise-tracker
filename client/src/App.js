@@ -46,7 +46,8 @@ class App extends Component {
     })
     .then((res) => {
       this.setState({loading: false});
-      console.log(res);
+      document.cookie = "token=" + res.data.token;
+      this.props.history.push('/main');
     })
     .catch((error) => {
       this.setState({loading: false});
