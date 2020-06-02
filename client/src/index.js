@@ -5,12 +5,14 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import Main from './containers/main/main';
+import Missing from './containers/missing/missing'
 
 const routes = (
   <Router>
     <Switch>
       <Route exact path="/" component={App}/>
       <Route path="/main" component={Main}/>
+      <Route component={Missing}/>
     </Switch>
   </Router>
 )

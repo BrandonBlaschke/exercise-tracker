@@ -1,15 +1,40 @@
 import React, {Component} from 'react';
 import './header.css';
 
-const Header = (props) => {
-    return (
-        <div className="header box">
-            <h1>Exercise Tracker</h1>
-            <a className="item">LINK 1</a>
-            <a className="item">link 1</a>
-            <a className="item">link 1</a>
-        </div>
-    );
+
+class Header extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+          enableMenu: false,
+          buttonText: "🞬"
+        }
+      }
+    
+    showHideMenu = (event) => {
+        let enableMenu = !this.state.enableMenu;
+        if (enableMenu) {
+            this.setState({enableMenu, buttonText: "☰"});
+        } else {
+            this.setState({enableMenu, buttonText: "🞬"});
+        }
+    }
+
+    render() {
+        let liClass = this.state.enableMenu ? true : false
+
+        return (
+            <nav>
+                <ul className="headerList">
+                    <button onClick={this.showHideMenu}> {this.state.buttonText} </button>
+                    <li hidden={liClass}><a>EXERCISES</a></li>
+                    <li hidden={liClass}><a>HOME</a></li>
+                    <li hidden={liClass}><a>CREATE</a></li>
+                </ul>
+            </nav>
+        );
+    }
 }
 
 export default Header;
