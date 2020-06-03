@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Header from '../../components/header/header'
+import ExerciseList from '../../components/exercisesList/exerciseList'
 
 class Main extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      loading: false,
+      loading: true,
+      data: null
     }
   }
 
@@ -16,18 +18,21 @@ class Main extends Component {
       axios.get('/exercise', {
           headers: {Authorization: `Bearer ${token}`}
       }).then((res) => {
-          console.log(res);
+          this.setState({loading: false, data:res.data});
+          console.log(res.data);
       }).catch((e) => {
+          this.setState({loading: false});
           console.log(e);
       })
   }
 
   render() {
-    let exercises = this.getExercises();
+    let exercises = this.state.data === null ? this.getExercises() : this.state.data;
 
     return (
       <div>
         <Header/>
+        <ExerciseList/>
       </div>
     );
   }
