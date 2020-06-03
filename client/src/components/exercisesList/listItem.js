@@ -12,7 +12,7 @@ class ListItem extends Component {
             <h2>{this.props.exercise}</h2>
         </div>
         <div class="course-info">
-            <h6>Last updated: {this.props.date}</h6>
+            <h6>Unit: {this.props.unit}</h6>
             <h2>Graph</h2>
             <button class="btn">Update</button>
         </div>

@@ -32,7 +32,7 @@ class Main extends Component {
     return (
       <div>
         <Header/>
-        <ExerciseList/>
+        <ExerciseList data={this.state.data}/>
       </div>
     );
   }

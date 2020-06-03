@@ -4,12 +4,22 @@ import ListItem from './listItem';
 
 class ExerciseList extends Component {
 
+  prepareList = () => {
+    if (!this.props.data) {
+      return null;
+    }
+    
+    let newList = this.props.data.map((exerciseData) => {
+      return <ListItem exercise={exerciseData.name} unit={exerciseData.unit}/>
+    });
+    return newList;
+  }
+
   render() {
 
     return (
     <div class="courses-container">
-        <ListItem exercise="DeadLift" date="5/1/2020"/>
-        <ListItem exercise="Squat" date="5/23/2020"/>
+        {this.prepareList()}
     </div>
     );
   }
