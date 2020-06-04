@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "./modal.css";
+import Graph from '../graph/graph';
 
 class Modal extends Component {
 
@@ -17,10 +18,11 @@ class Modal extends Component {
     return (
     <div className="modal">
         <div className="modal-main">
-            <h1>Modal</h1>
-            <p>{this.props.data.name}</p>
-            <button onClick={this.closeModal}>Close</button>
+          <button onClick={this.closeModal}>🞬</button>
+          <h1>{this.props.data.name}</h1>
+          <Graph data={this.props.data}/>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     </div>
     );
   }
