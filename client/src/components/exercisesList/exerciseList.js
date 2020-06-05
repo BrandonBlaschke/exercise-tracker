@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import "./exerciseList.css";
 import ListItem from './listItem';
+import { withRouter } from "react-router-dom";
 import Modal from '../modal/modal';
 
 class ExerciseList extends Component {
@@ -22,6 +23,12 @@ class ExerciseList extends Component {
     this.setState({modal: false});
   }
 
+  goToPage = (id) => {
+    // TODO: Hacky, try and find a better way
+    this.props.history.push(`/exercisePage/${id}`);
+    window.location.reload();
+  }
+
   prepareList = () => {
     if (!this.props.data) {
       return null;
@@ -29,7 +36,7 @@ class ExerciseList extends Component {
 
     let newList = this.props.data.map((exerciseData) => {
       return <ListItem 
-        action={() => this.openModal(exerciseData)} 
+        action={() => this.goToPage(exerciseData._id)} 
         exercise={exerciseData.name} 
         updates={exerciseData.dataPoints.length}/>
     });
@@ -47,4 +54,4 @@ class ExerciseList extends Component {
   }
 }
 
-export default ExerciseList;
+export default withRouter(ExerciseList);

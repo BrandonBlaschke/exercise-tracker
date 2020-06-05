@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Line} from 'react-chartjs-2';
+import './graph.css'
 
 class Graph extends Component {
 
@@ -47,9 +48,29 @@ class Graph extends Component {
           pointHitRadius: 10,
           data: points
         }
-      ]
+      ] 
     };
     return data;
+  }
+
+  graphOptions = () => {
+    let options = {
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: this.props.data.unit + 's'
+          }
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Date'
+          }
+        }],
+      }
+    } 
+    return options;
   }
 
   render() {
@@ -61,8 +82,8 @@ class Graph extends Component {
     let graph = this.createGraph();
 
     return (
-    <div>
-        <Line data={graph}/>
+    <div class="graph">
+        <Line data={graph} options={this.graphOptions()}/>
     </div>
     );
   }

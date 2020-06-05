@@ -1,0 +1,7 @@
+.exercise-container {
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80vw;
+    padding: 1em;
+}

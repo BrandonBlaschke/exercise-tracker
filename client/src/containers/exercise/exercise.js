@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import './exercise.css'
 
 import Graph from '../../components/graph/graph';
 import Header from '../../components/header/header';
@@ -44,7 +45,7 @@ class Exercise extends Component {
     return (
     <div>
         <Header/>
-        <div style={{backgroundColor: "white"}}>
+        <div class="exercise-container">
             <Graph data={this.state.data}/>
         </div>
     </div>

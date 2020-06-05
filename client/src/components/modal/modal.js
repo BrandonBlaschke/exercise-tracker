@@ -19,10 +19,8 @@ class Modal extends Component {
     <div className="modal">
         <div className="modal-main">
           <button onClick={this.closeModal}>🞬</button>
-          <h1>{this.props.data.name}</h1>
-          <Graph data={this.props.data}/>
+          <h1>Modal</h1>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     </div>
     );
   }
