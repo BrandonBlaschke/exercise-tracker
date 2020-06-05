@@ -4,21 +4,23 @@ import {Line} from 'react-chartjs-2';
 class Graph extends Component {
 
   createGraph = () => {
-
-    let sorted = this.props.data.dataPoints.sort((data1, data2) => {
-        data1 = new Date(data1.date);
-        data2 = new Date(data2.date);
-        return data1 - data2;
-    })
-
+    
     let points = [];
     let dates = [];
 
-    sorted.forEach(dataPoint => {
+    if (this.props.data) {
+      let sorted = this.props.data.dataPoints.sort((data1, data2) => {
+        data1 = new Date(data1.date);
+        data2 = new Date(data2.date);
+        return data1 - data2;
+      })
+
+      sorted.forEach(dataPoint => {
         let date = new Date(dataPoint.date);
         dates.push(`${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCFullYear()}`);
         points.push(dataPoint.data);
-    });
+      });
+    }
 
     const data = {
       labels: dates,
@@ -27,7 +29,7 @@ class Graph extends Component {
           label: "Data Point",
           fill: false,
           lineTension: 0.1,
-          backgroundColor: 'rgb(118,184,82)',
+          backgroundColor: 'rgb(255,255,255)',
           borderColor: 'rgb(118,184,82)',
           borderCapStyle: 'butt',
           borderDash: [],

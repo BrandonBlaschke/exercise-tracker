@@ -6,12 +6,14 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import Main from './containers/main/main';
 import Missing from './containers/missing/missing'
+import Exercise from './containers/exercise/exercise';
 
 const routes = (
   <Router>
     <Switch>
       <Route exact path="/" component={App}/>
       <Route path="/main" component={Main}/>
+      <Route path="/exercisePage/:id" component={Exercise}/>
       <Route component={Missing}/>
     </Switch>
   </Router>
