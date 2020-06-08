@@ -5,6 +5,7 @@ import './exercise.css'
 import Graph from '../../components/graph/graph';
 import Header from '../../components/header/header';
 import Modal from '../../components/modal/modal';
+import DataPoint from '../../components/dataPoint/dataPoint';
 
 class Exercise extends Component {
 
@@ -42,11 +43,26 @@ class Exercise extends Component {
   }
 
   render() {
+
+    let dataPoints = null;
+
+    if (this.state.data) {
+      dataPoints = this.state.data.dataPoints.map((dataPoint) => {
+        let date = new Date(dataPoint.date);
+        return <DataPoint value={dataPoint.data} date={`${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCDay()}`}
+        unit={this.state.data.unit}/>
+      });
+    }
+    
+
     return (
     <div>
         <Header/>
         <div class="exercise-container">
             <Graph data={this.state.data}/>
+        </div>
+        <div className="exercise-container-list">
+          {dataPoints}
         </div>
     </div>
     );

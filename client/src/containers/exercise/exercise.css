@@ -5,3 +5,11 @@
     max-width: 80vw;
     padding: 1em;
 }
+
+.exercise-container-list {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin: .5em;
+}
