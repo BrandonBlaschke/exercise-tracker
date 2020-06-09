@@ -5,7 +5,8 @@ import './exercise.css'
 import Graph from '../../components/graph/graph';
 import Header from '../../components/header/header';
 import Modal from '../../components/modal/modal';
-import DataPoint from '../../components/dataPoint/dataPoint';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
 
 class Exercise extends Component {
 
@@ -42,19 +43,38 @@ class Exercise extends Component {
     })
   }
 
+  prepareData = () => {
+    if (!this.state.data) {
+      return null;
+    }
+
+    let sorted = this.state.data.dataPoints.sort((data1, data2) => {
+      data1 = new Date(data1.date);
+      data2 = new Date(data2.date);
+      return data2 - data1;
+    })
+
+    let dataPoints = sorted.map((dataPoint) => {
+      let date = new Date(dataPoint.date);
+      let formattedDate = `${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCDay()}`;
+      return (
+        <tr>
+          <td>{formattedDate}</td>
+          <td>{dataPoint.data}</td>
+          <td>{this.state.data.unit}</td>
+          <td><span className="button"><FontAwesomeIcon icon={faEdit} size="lg"/></span></td>
+          <td><span className="button"><FontAwesomeIcon icon={faTrash} size="lg"/></span></td>
+        </tr>
+      )
+    });
+    
+    return dataPoints;
+  }
+
   render() {
 
-    let dataPoints = null;
-
-    if (this.state.data) {
-      dataPoints = this.state.data.dataPoints.map((dataPoint) => {
-        let date = new Date(dataPoint.date);
-        return <DataPoint value={dataPoint.data} date={`${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCDay()}`}
-        unit={this.state.data.unit}/>
-      });
-    }
+    let dataPoints = this.prepareData();
     
-
     return (
     <div>
         <Header/>
@@ -62,7 +82,20 @@ class Exercise extends Component {
             <Graph data={this.state.data}/>
         </div>
         <div className="exercise-container-list">
-          {dataPoints}
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Value</th>
+                <th>Unit</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataPoints}
+            </tbody>
+          </table>
         </div>
     </div>
     );

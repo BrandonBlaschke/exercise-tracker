@@ -7,9 +7,48 @@
 }
 
 .exercise-container-list {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	margin: .5em;
+    margin: 1em auto;
+}
+
+table {
+    background-color: white;
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 500px) {
+    table {
+        width: 100%;
+    }
+  }
+
+th{ 
+    padding: 1em;
+    background-color: #05386b;
+    color: white;
+    text-align: left;
+}
+
+td {
+    border: none;
+    padding: 1em;
+    font-weight: bold;
+    color: rgb(118,184,82);
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(245, 245, 245);
+}
+
+table .button {
+    margin: 1em 1em;
+    border: none;
+    color: rgb(116, 116, 116);
+    cursor: pointer;
+}
+
+table .button:hover {
+    color: #05386b;
 }
