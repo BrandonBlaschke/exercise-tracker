@@ -3,6 +3,7 @@ import "./exerciseList.css";
 import ListItem from './listItem';
 import { withRouter } from "react-router-dom";
 import Modal from '../modal/modal';
+import axios from 'axios';
 
 class ExerciseList extends Component {
 
@@ -29,6 +30,20 @@ class ExerciseList extends Component {
     window.location.reload();
   }
 
+  deleteExercise = (id) => {
+    let token = document.cookie.split(';')[0].split('=')[1]
+    axios.delete(`/exercise/${id}`, {
+      headers: {Authorization: `Bearer ${token}`}})
+      .then((res) => {
+        let index = this.props.data.findIndex((exercise) => exercise._id === id)
+        this.props.data.splice(index, 1);
+        this.setState({modalData: this.props.data})
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
   prepareList = () => {
     if (!this.props.data) {
       return null;
@@ -38,7 +53,8 @@ class ExerciseList extends Component {
       return <ListItem 
         action={() => this.goToPage(exerciseData._id)} 
         exercise={exerciseData.name} 
-        updates={exerciseData.dataPoints.length}/>
+        updates={exerciseData.dataPoints.length}
+        delete={() => this.deleteExercise(exerciseData._id)}/>
     });
     return newList;
   }

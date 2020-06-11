@@ -65,6 +65,20 @@ exerciseRouter.delete('/exercise', auth, async (req: any, res: any) => {
     }
 })
 
+exerciseRouter.delete('/exercise/:id', auth, async (req: any, res: any) => {
+    try {
+        const exercise = await Exercise.deleteOne({"_id": req.params.id, "owner": req.user._id})
+
+        if (!exercise) {
+            res.status(401).send();
+        }
+
+        res.status(200).send();
+    } catch (e) {
+        res.status(400).send();
+    }
+})
+
 // GET Specific exercise
 // id route, id of exercise
 exerciseRouter.get('/exercise/:id', auth, async (req: any, res: any) => {
