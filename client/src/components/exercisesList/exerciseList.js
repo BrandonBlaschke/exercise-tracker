@@ -5,6 +5,8 @@ import { withRouter } from "react-router-dom";
 import Modal from '../modal/modal';
 import axios from 'axios';
 import ModalAdd from '../modal-add/modalAdd';
+import ModalEdit from '../modal-edit/modalEdit';
+import ModalDelete from '../modal-delete/modalDelete';
 
 class ExerciseList extends Component {
 
@@ -13,12 +15,13 @@ class ExerciseList extends Component {
     
     this.state = {
       modal: false,
-      modalData: null
+      modalData: null,
+      modalForm: "add"
     }
   }
 
-  openModal = (data) => {
-    this.setState({modal: true, modalData: data});
+  openModal = (data, modalForm) => {
+    this.setState({modal: true, modalData: data, modalForm});
   }
 
   closeModal = () => {
@@ -31,18 +34,15 @@ class ExerciseList extends Component {
     window.location.reload();
   }
 
+  renameExercise = (id, name) => {
+    let index = this.props.data.findIndex((exercise) => exercise._id === id)
+    this.props.data[index]["name"] = name;
+  }
+
   deleteExercise = (id) => {
-    let token = document.cookie.split(';')[0].split('=')[1]
-    axios.delete(`/exercise/${id}`, {
-      headers: {Authorization: `Bearer ${token}`}})
-      .then((res) => {
-        let index = this.props.data.findIndex((exercise) => exercise._id === id)
-        this.props.data.splice(index, 1);
-        this.setState({modalData: this.props.data})
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    let index = this.props.data.findIndex((exercise) => exercise._id === id)
+    this.props.data.splice(index, 1);
+    this.setState({modalData: this.props.data})
   }
 
   prepareList = () => {
@@ -55,19 +55,29 @@ class ExerciseList extends Component {
         action={() => this.goToPage(exerciseData._id)} 
         exercise={exerciseData.name} 
         updates={exerciseData.dataPoints.length}
-        add={() => this.openModal(exerciseData._id)}
-        delete={() => this.deleteExercise(exerciseData._id)}/>
+        add={() => this.openModal(exerciseData._id, "add")}
+        edit={() => this.openModal(exerciseData._id, "edit")}
+        delete={() => this.openModal(exerciseData._id, "delete")}/>
     });
     return newList;
   }
 
   render() {
 
+    let modalForm;
+    if (this.state.modalForm === "add") {
+      modalForm = <ModalAdd id={this.state.modalData} close={this.closeModal}/>
+    } else if (this.state.modalForm === "edit") {
+      modalForm = <ModalEdit id={this.state.modalData} rename={this.renameExercise} close={this.closeModal}/>;
+    } else {
+      modalForm = <ModalDelete id={this.state.modalData} close={this.closeModal} delete={this.deleteExercise}/>;
+    }
+
     return (
     <div class="courses-container">
         {this.prepareList()}
         <Modal show={this.state.modal} onClose={this.closeModal}>
-          <ModalAdd data={this.state.modalData}/>
+          {modalForm}
         </Modal>
     </div>
     );

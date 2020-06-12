@@ -1,0 +1,101 @@
+.addDataContent {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 1.5em 1em 0em;
+}
+
+#dataForm {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+
+#dataForm label{ 
+    color: #b3b3b3;
+}
+
+#dataForm input {
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 15px 0;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#dataForm button {
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    margin: .1em;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#dataForm span {
+    color: #bd0c0c;
+    font-size: 12px;
+}
+
+.form button:hover,.form button:active,.form button:focus {
+    background: #43A047;
+}
+
+/* Reset Select */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #05386b;
+    background-image: none;
+  }
+  /* Remove IE arrow */
+  select::-ms-expand {
+    display: none;
+  }
+  /* Custom Select */
+  .select {
+    position: relative;
+    margin: 15px 0;
+    display: flex;
+    height: 3em;
+    line-height: 3;
+    background: #f2f2f2;
+    overflow: hidden;
+    border-radius: .25em;
+  }
+  select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #000;
+    cursor: pointer;
+  }
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #4CAF50;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+  }
+  /* Transition */
+  .select:hover::after {
+    color: #f39c12;
+  }
+  

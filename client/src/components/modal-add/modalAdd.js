@@ -35,7 +35,7 @@ class ModalAdd extends Component {
     }
 
     const data = {
-        _id: this.props.data,
+        _id: this.props.id,
         date: date.getTime(),
         data: this.state.data
     }
@@ -47,7 +47,7 @@ class ModalAdd extends Component {
 
     axios.post('/exercise/addData', data, headers)
       .then((res) => {
-        console.log("Success");
+        this.props.close();
       })
       .catch((error) => {
         console.log(error);
@@ -70,7 +70,7 @@ class ModalAdd extends Component {
     <div className="addDataContent">
         <h2>Add Data Point</h2>
         <form id="dataForm">
-            <label for="data">Date</label>
+            <label for="date">Date</label>
             <input onChange={this.getDate} name="date" type="date" required/>
             <label for="data">Data</label>
             <input onChange={this.getData} name="data" type="number" required/>

@@ -46,13 +46,13 @@ interface IExerciseSchema extends mongoose.Document {
     }],
     addDataPoint(date: Date, data: number, notes: string): undefined,
     deleteDataPoint(index: number): undefined,
-    updateDataPoint(name: string, dataPoint: any, index: number): undefined
+    updateDataPoint(name: string, dataPoint: any, index: number, unit: string): undefined
 }
 
 interface IExerciseModel extends mongoose.Model<IExerciseSchema> {
     addDataPoint(date: Date, data: number, notes: string): undefined,
     deleteDataPoint(index: number): undefined,
-    updateDataPoint(name: string, dataPoint: any, index: number): undefined
+    updateDataPoint(name: string, dataPoint: any, index: number, unit: string): undefined
 }
 
 /**
@@ -81,9 +81,12 @@ exerciseSchema.methods.deleteDataPoint = async function(index: number) {
  * @param dataPoint: Data point object to save.
  * @param index: Index number for dataPoints array to save to.
  */
-exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint: any, index: number) {
-    this.name = name;
-    this.dataPoints[index] = dataPoint;
+exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint: any, index: number, unit: string) {
+    this.name = name ? name : this.name;
+    this.unit = unit ? unit : this.unit;
+    if (index && dataPoint) {
+        this.dataPoints[index] = dataPoint;
+    }
     await this.save();
 }
 
