@@ -18,8 +18,10 @@ class Modal extends Component {
     return (
     <div className="modal">
         <div className="modal-main">
-          <button onClick={this.closeModal}>🞬</button>
-          <h1>Modal</h1>
+          <button className="closeButton" onClick={this.closeModal}>🞬</button>
+          <div className="modal-content"> 
+            {this.props.children} 
+          </div>
         </div>
     </div>
     );

@@ -29,6 +29,7 @@ exerciseRouter.post('/exercise', auth, async (req: any, res: any) => {
 
 // POST Add Data Point
 /** Expects these JSON values 
+ * _id: id of the exercise
  * date: Number: Date integer
  * data: Number: Data for data point
  * notes: String, notes to add with data point.

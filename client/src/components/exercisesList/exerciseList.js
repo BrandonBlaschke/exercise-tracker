@@ -4,6 +4,7 @@ import ListItem from './listItem';
 import { withRouter } from "react-router-dom";
 import Modal from '../modal/modal';
 import axios from 'axios';
+import ModalAdd from '../modal-add/modalAdd';
 
 class ExerciseList extends Component {
 
@@ -54,6 +55,7 @@ class ExerciseList extends Component {
         action={() => this.goToPage(exerciseData._id)} 
         exercise={exerciseData.name} 
         updates={exerciseData.dataPoints.length}
+        add={() => this.openModal(exerciseData._id)}
         delete={() => this.deleteExercise(exerciseData._id)}/>
     });
     return newList;
@@ -64,7 +66,9 @@ class ExerciseList extends Component {
     return (
     <div class="courses-container">
         {this.prepareList()}
-        <Modal show={this.state.modal} onClose={this.closeModal} data={this.state.modalData}/>
+        <Modal show={this.state.modal} onClose={this.closeModal}>
+          <ModalAdd data={this.state.modalData}/>
+        </Modal>
     </div>
     );
   }

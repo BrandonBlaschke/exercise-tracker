@@ -18,7 +18,7 @@ class Graph extends Component {
 
       sorted.forEach(dataPoint => {
         let date = new Date(dataPoint.date);
-        dates.push(`${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCFullYear()}`);
+        dates.push(`${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`);
         points.push(dataPoint.data);
       });
     }

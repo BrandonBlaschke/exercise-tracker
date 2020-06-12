@@ -56,7 +56,7 @@ class Exercise extends Component {
 
     let dataPoints = sorted.map((dataPoint) => {
       let date = new Date(dataPoint.date);
-      let formattedDate = `${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCDay()}`;
+      let formattedDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
       return (
         <tr>
           <td>{formattedDate}</td>

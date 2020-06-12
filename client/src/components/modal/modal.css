@@ -10,15 +10,18 @@
 .modal-main {
   position:fixed;
   background: white;
-  width: 80%;
   height: auto;
   top:50%;
-  text-align: center;
   left:50%;
   transform: translate(-50%,-50%);
 }
 
-.modal-main button {
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.closeButton {
   border: none;
   background-color: white;
   color: gray;
@@ -27,6 +30,6 @@
   outline: none;
 }
 
-.modal-main button:hover {
+.closeButton:hover {
   color: black;
 }

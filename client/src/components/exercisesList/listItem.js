@@ -15,7 +15,7 @@ class ListItem extends Component {
             <span className="exercise-updates">Updates: {this.props.updates}</span>
           </div>
           <div className="exercise-buttons">
-            <span><FontAwesomeIcon icon={faPlus} size="sm"/></span>
+            <span onClick={this.props.add}><FontAwesomeIcon icon={faPlus} size="sm"/></span>
             <span><FontAwesomeIcon icon={faEdit} size="sm"/></span>
             <span onClick={this.props.delete}><FontAwesomeIcon icon={faTrash} size="sm"/></span>  
           </div>
