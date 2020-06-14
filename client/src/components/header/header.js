@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
 import './header.css';
+import axios from 'axios'
+import Modal from '../modal/modal';
+import ModalAddExer from '../modal-add-exercise/modalAddExer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faPlus, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import {Link} from 'react-router-dom'
 
 
 class Header extends Component {
@@ -7,8 +13,7 @@ class Header extends Component {
         super(props);
         
         this.state = {
-          enableMenu: false,
-          buttonText: "🞬"
+          modalOpen: false
         }
       }
     
@@ -21,17 +26,37 @@ class Header extends Component {
         }
     }
 
+    toggleModal = () => {
+        this.setState({modalOpen: !this.state.modalOpen});
+    }
+
+    signOut = () => {
+        const token = document.cookie.split(';')[0].split('=')[1]
+        const headers = {
+            headers: {Authorization: `Bearer ${token}`}
+        }
+
+        axios.post('/user/logout', {}, headers)
+        .then((res) => {
+            this.props.history.push('/');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
     render() {
-        let liClass = this.state.enableMenu ? true : false
 
         return (
             <nav>
                 <ul className="headerList">
-                    <button onClick={this.showHideMenu}> {this.state.buttonText} </button>
-                    <li hidden={liClass}><a>EXERCISES</a></li>
-                    <li hidden={liClass}><a>HOME</a></li>
-                    <li hidden={liClass}><a>CREATE</a></li>
+                    <li><a onClick={this.toggleModal} title="Add Exercise"><FontAwesomeIcon icon={faPlus} size="lg"/></a></li>
+                    <li><Link to="/main" style={{textDecoration: 'none', color:"white"}}>EXERCISE TRACKER</Link></li>
+                    <li><a title="Sign Out" onClick={this.signOut}><FontAwesomeIcon icon={faSignOutAlt} size="lg"/></a></li>
                 </ul>
+                <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
+                    <ModalAddExer close={this.toggleModal}/>
+                </Modal>
             </nav>
         );
     }

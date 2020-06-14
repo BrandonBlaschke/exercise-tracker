@@ -3,7 +3,6 @@ import "./exerciseList.css";
 import ListItem from './listItem';
 import { withRouter } from "react-router-dom";
 import Modal from '../modal/modal';
-import axios from 'axios';
 import ModalAdd from '../modal-add/modalAdd';
 import ModalEdit from '../modal-edit/modalEdit';
 import ModalDelete from '../modal-delete/modalDelete';

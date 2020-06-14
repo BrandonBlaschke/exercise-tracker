@@ -31,7 +31,7 @@ class Main extends Component {
 
     return (
       <div>
-        <Header/>
+        <Header {...this.props}/>
         <ExerciseList data={this.state.data}/>
       </div>
     );
