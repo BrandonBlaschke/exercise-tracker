@@ -6,6 +6,7 @@ import ModalAddExer from '../modal-add-exercise/modalAddExer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPlus, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom'
+import logo from '../../assets/logo.png'
 
 
 class Header extends Component {
@@ -50,9 +51,9 @@ class Header extends Component {
         return (
             <nav>
                 <ul className="headerList">
-                    <li><a onClick={this.toggleModal} title="Add Exercise"><FontAwesomeIcon icon={faPlus} size="lg"/></a></li>
-                    <li><Link to="/main" style={{textDecoration: 'none', color:"white"}}>EXERCISE TRACKER</Link></li>
-                    <li><a title="Sign Out" onClick={this.signOut}><FontAwesomeIcon icon={faSignOutAlt} size="lg"/></a></li>
+                    <li><a onClick={this.toggleModal} title="Add Exercise"><FontAwesomeIcon icon={faPlus} size="2x"/></a></li>
+                    <li><Link to="/main" style={{textDecoration: 'none', color:"white"}}><img alt="logo" width="50" height="50" src={logo}/></Link></li>
+                    <li><a title="Sign Out" onClick={this.signOut}><FontAwesomeIcon icon={faSignOutAlt} size="2x"/></a></li>
                 </ul>
                 <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
                     <ModalAddExer close={this.toggleModal}/>
