@@ -59,7 +59,7 @@ exerciseRouter.delete('/exercise', auth, async (req: any, res: any) => {
             res.status(401).send();
         }
 
-        await exercise?.deleteDataPoint(req.query.index);
+        await exercise?.deleteDataPoint(req.query.dataPointID);
         res.status(200).send();
     } catch (e) {
         res.status(400).send();
@@ -133,7 +133,7 @@ exerciseRouter.patch('/exercise', auth, async (req: any, res: any) => {
             res.status(400).send()
         }
 
-        exercise?.updateDataPoint(req.body.name, req.body.dataPoint, req.body.index, req.body.unit);
+        exercise?.updateDataPoint(req.body.name, req.body.dataPoint, req.body.unit);
         res.status(200).send();
     } catch (e) {
         res.status(400).send();

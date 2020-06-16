@@ -45,14 +45,14 @@ interface IExerciseSchema extends mongoose.Document {
         notes: string
     }],
     addDataPoint(date: Date, data: number, notes: string): undefined,
-    deleteDataPoint(index: number): undefined,
-    updateDataPoint(name: string, dataPoint: any, index: number, unit: string): undefined
+    deleteDataPoint(id: string): undefined,
+    updateDataPoint(name: string, dataPoint: any, unit: string): undefined
 }
 
 interface IExerciseModel extends mongoose.Model<IExerciseSchema> {
     addDataPoint(date: Date, data: number, notes: string): undefined,
-    deleteDataPoint(index: number): undefined,
-    updateDataPoint(name: string, dataPoint: any, index: number, unit: string): undefined
+    deleteDataPoint(id: string): undefined,
+    updateDataPoint(name: string, dataPoint: any, unit: string): undefined
 }
 
 /**
@@ -70,7 +70,8 @@ exerciseSchema.methods.addDataPoint = async function(date: Date, data: number, n
  * Delete a data point.
  * @param index: Index number in dataPoints array to remove
  */
-exerciseSchema.methods.deleteDataPoint = async function(index: number) {
+exerciseSchema.methods.deleteDataPoint = async function(id: string) {
+    let index = this.dataPoints.find((dp: any) => dp._id === id);
     this.dataPoints.splice(index, 1);
     await this.save();
 }
@@ -79,12 +80,13 @@ exerciseSchema.methods.deleteDataPoint = async function(index: number) {
  * Update data point
  * @param name: Name of the data point to change or leave same.
  * @param dataPoint: Data point object to save.
- * @param index: Index number for dataPoints array to save to.
+ * @param unit: Unit for the exercise.
  */
-exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint: any, index: number, unit: string) {
+exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint: any, unit: string) {
     this.name = name ? name : this.name;
     this.unit = unit ? unit : this.unit;
-    if (index && dataPoint) {
+    if (dataPoint) {
+        let index = this.dataPoints.find((dp: any) => dp._id === dataPoint._id);
         this.dataPoints[index] = dataPoint;
     }
     await this.save();

@@ -5,6 +5,9 @@ import './exercise.css'
 import Graph from '../../components/graph/graph';
 import Header from '../../components/header/header';
 import Modal from '../../components/modal/modal';
+import ModalEditDP from '../../components/modal-edit-dp/modalEditDP';
+import ModalDeleteDP from '../../components/modal-delete-dp/modalDeleteDP';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
 
@@ -15,13 +18,15 @@ class Exercise extends Component {
     
     this.state = {
       modal: false,
+      modalType: "edit",
+      modalData: null,
       loading: true,
       data: null,
     }
   }
 
-  openModal = (data) => {
-    this.setState({modal: true, modalData: data});
+  openModal = (modalType, data) => {
+    this.setState({modal: true, modalData: data, modalType});
   }
 
   closeModal = () => {
@@ -43,6 +48,12 @@ class Exercise extends Component {
     })
   }
 
+  removeDataPoint = (id) => {
+    let index = this.state.data.dataPoints.find((dataPoint) => dataPoint._id === id);
+    this.state.data.dataPoints.splice(index, 1);
+    this.setState({data: this.state.data});
+  }
+
   prepareData = () => {
     if (!this.state.data) {
       return null;
@@ -57,13 +68,14 @@ class Exercise extends Component {
     let dataPoints = sorted.map((dataPoint) => {
       let date = new Date(dataPoint.date);
       let formattedDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
+      let modalData = {_id: this.state.data._id, dataPoint: dataPoint}
       return (
         <tr>
           <td>{formattedDate}</td>
           <td>{dataPoint.data}</td>
           <td>{this.state.data.unit}</td>
-          <td><span className="button"><FontAwesomeIcon icon={faEdit} size="lg"/></span></td>
-          <td><span className="button"><FontAwesomeIcon icon={faTrash} size="lg"/></span></td>
+          <td><span onClick={() => this.openModal("edit", modalData)} className="button"><FontAwesomeIcon icon={faEdit} size="lg"/></span></td>
+          <td><span onClick={() => this.openModal("delete", modalData)} className="button"><FontAwesomeIcon icon={faTrash} size="lg"/></span></td>
         </tr>
       )
     });
@@ -74,6 +86,13 @@ class Exercise extends Component {
   render() {
 
     let dataPoints = this.prepareData();
+
+    let modal;
+    if (this.state.modalType === "edit") {
+      modal = <ModalEditDP data={this.state.modalData} close={this.closeModal}/>
+    } else {
+      modal = <ModalDeleteDP remove={this.removeDataPoint} data={this.state.modalData} close={this.closeModal}/>
+    }
     
     return (
     <div>
@@ -97,6 +116,9 @@ class Exercise extends Component {
             </tbody>
           </table>
         </div>
+        <Modal show={this.state.modal} onClose={this.closeModal}>
+          {modal}
+        </Modal>
     </div>
     );
   }
