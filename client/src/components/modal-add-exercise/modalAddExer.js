@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import ModalEdit from '../modal-edit/modalEdit';
+import ModalError from '../modal-error/modalError';
 
 class ModalAddExer extends Component {
   
@@ -9,7 +11,8 @@ class ModalAddExer extends Component {
     this.state = {
         name: null,
         unit: null,
-        errorMsg: ''
+        errorMsg: '',
+        errorModal: false
       }
   }
 
@@ -23,7 +26,6 @@ class ModalAddExer extends Component {
 
   getUnit = (event) => {
     const value = event.target.value;
-    console.log(event.target);
     if (value === "" || !value) {
       return this.setState({errorMsg: "Please select unit"});
     }
@@ -53,10 +55,11 @@ class ModalAddExer extends Component {
 
     axios.post('/exercise', data, headers)
       .then((res) => {
+        this.props.update(res.data)
         this.props.close();
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({errorModal: true})
       })
   }
 
@@ -67,8 +70,8 @@ class ModalAddExer extends Component {
         error = <span>{this.state.errorMsg}</span>
     }
 
-    return (
-    <div className="addDataContent">
+    let mainForm = (
+      <div className="addDataContent">
         <h2>Create Exercise</h2>
         <form id="dataForm">
             <label for="name">Name</label>
@@ -85,6 +88,16 @@ class ModalAddExer extends Component {
             <button type="submit" onClick={this.submit}>Submit</button>
         </form>
     </div>
+    );
+
+    if (this.state.errorModal) {
+      mainForm = <ModalError title="Error" onClose={this.props.close}>Failed to create exercise.</ModalError>
+    }
+
+    return (
+      <div>
+        {mainForm}
+      </div>
     );
   }
 }

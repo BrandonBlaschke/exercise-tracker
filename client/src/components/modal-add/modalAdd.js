@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import "./modalAdd.css";
+import ModalError from '../modal-error/modalError'
 
 class ModalAdd extends Component {
   
@@ -10,7 +11,8 @@ class ModalAdd extends Component {
     this.state = {
         data: null,
         date: null,
-        errorMsg: ''
+        errorMsg: '',
+        errorModal: false
       }
   }
 
@@ -50,7 +52,7 @@ class ModalAdd extends Component {
         this.props.close();
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({errorModal: true});
       })
   }
 
@@ -66,18 +68,28 @@ class ModalAdd extends Component {
     // let today = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString().padStart(2, 0) +
     // '-' + date.getDate().toString().padStart(2, 0);
 
-    return (
+    let mainForm = (
     <div className="addDataContent">
-        <h2>Add Data Point</h2>
-        <form id="dataForm">
-            <label for="date">Date</label>
-            <input onChange={this.getDate} name="date" type="date" required/>
-            <label for="data">Data</label>
-            <input onChange={this.getData} name="data" type="number" required/>
-            {error}
-            <button type="submit" onClick={this.submit}>Submit</button>
-        </form>
+      <h2>Add Data Point</h2>
+      <form id="dataForm">
+          <label for="date">Date</label>
+          <input onChange={this.getDate} name="date" type="date" required/>
+          <label for="data">Data</label>
+          <input onChange={this.getData} name="data" type="number" required/>
+          {error}
+          <button type="submit" onClick={this.submit}>Submit</button>
+      </form>
     </div>
+    );
+
+    if (this.state.errorModal) {
+      mainForm = <ModalError title="Error" onClose={this.props.close}>Failed to add data point to exercise.</ModalError>
+    }
+
+    return (
+      <div>
+        {mainForm}
+      </div>
     );
   }
 }

@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import ModalError from '../modal-error/modalError';
 
 class ModalDelete extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalError: false
+    }
+  }
 
   submit = (event) => {
     event.preventDefault();
@@ -15,21 +23,31 @@ class ModalDelete extends Component {
             this.props.close();
         })
         .catch((error) => {
-            console.log(error);
+            this.setState({modalError: true});  
         })
   }
 
   render() {
 
-    return (
-    <div className="addDataContent">
+    let modalForm = (
+      <div className="addDataContent">
         <h2>Delete Exercise</h2>
         <form id="dataForm">
             <p>All data for this exercise will be deleted.</p>
             <button type="submit" onClick={this.submit}>Yes</button>
             <button onClick={this.props.close}>No</button>
         </form>
-    </div>
+      </div>
+    );
+
+    if (this.state.modalError) {
+      modalForm = <ModalError title="Error" onClose={this.props.close}>Failed to delete exercise.</ModalError>
+    }
+
+    return (
+      <div>
+        {modalForm}
+      </div>
     );
   }
 }

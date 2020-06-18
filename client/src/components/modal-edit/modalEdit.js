@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import ModalError from '../modal-error/modalError';
 import "./modalEdit.css";
 
 class ModalEdit extends Component {
@@ -10,7 +11,8 @@ class ModalEdit extends Component {
     this.state = {
         name: null,
         unit: null,
-        errorMsg: ''
+        errorMsg: '',
+        modalError: false
       }
   }
 
@@ -59,7 +61,7 @@ class ModalEdit extends Component {
         this.props.close();
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({modalError: true});
       })
   }
 
@@ -70,24 +72,34 @@ class ModalEdit extends Component {
         error = <span>{this.state.errorMsg}</span>
     }
 
+    let modalForm = (
+      <div className="addDataContent">
+          <h2>Edit Exercise</h2>
+          <form id="dataForm">
+              <label for="name">Name</label>
+              <input onChange={this.getName} name="name" type="text" required/>
+              <label for="unit">Unit Type</label>
+              <select className="select" onChange={this.getUnit} name="unit" required>
+                <option value="">--Choose an option--</option>
+                <option value="lb">Pounds (lb)</option>
+                <option value="kg">Kilograms (kg)</option>
+                <option value="time">Time</option>
+                <option value="reps">Repetitions (reps)</option>
+            </select>
+              {error}
+              <button type="submit" onClick={this.submit}>Submit</button>
+          </form>
+      </div>
+    );
+
+    if (this.state.modalError) {
+      modalForm = <ModalError onClose={this.props.close} title="Error">Failed to modify exercise data.</ModalError>
+    }
+
     return (
-    <div className="addDataContent">
-        <h2>Edit Exercise</h2>
-        <form id="dataForm">
-            <label for="name">Name</label>
-            <input onChange={this.getName} name="name" type="text" required/>
-            <label for="unit">Unit Type</label>
-            <select className="select" onChange={this.getUnit} name="unit" required>
-              <option value="">--Choose an option--</option>
-              <option value="lb">Pounds (lb)</option>
-              <option value="kg">Kilograms (kg)</option>
-              <option value="time">Time</option>
-              <option value="reps">Repetitions (reps)</option>
-          </select>
-            {error}
-            <button type="submit" onClick={this.submit}>Submit</button>
-        </form>
-    </div>
+      <div>
+        {modalForm}
+      </div>
     );
   }
 }

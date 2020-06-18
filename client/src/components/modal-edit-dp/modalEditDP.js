@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import ModalError from '../modal-error/modalError';
 
 class ModalEditDP extends Component {
   
@@ -8,7 +9,8 @@ class ModalEditDP extends Component {
     
     this.state = {
         value: null,
-        errorMsg: ''
+        errorMsg: '',
+        errorModal: false
       }
   }
 
@@ -41,11 +43,10 @@ class ModalEditDP extends Component {
 
     axios.patch('/exercise', data, headers)
       .then((res) => {
-        console.log("SUCCESS")
         this.props.close();
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({errorModal: true});
       })
   }
 
@@ -56,16 +57,26 @@ class ModalEditDP extends Component {
         error = <span>{this.state.errorMsg}</span>
     }
 
+    let modalForm = (
+      <div className="addDataContent">
+          <h2>Edit Data Point</h2>
+          <form id="dataForm">
+              <label for="value">Value</label>
+              <input onChange={this.getValue} name="value" type="number" required/>
+              {error}
+              <button type="submit" onClick={this.submit}>Submit</button>
+          </form>
+      </div>
+    );
+
+    if (this.state.errorModal) {
+      modalForm = <ModalError onClose={this.props.close} title="Error">Failed to modify data point.</ModalError>
+    }
+
     return (
-    <div className="addDataContent">
-        <h2>Edit Data Point</h2>
-        <form id="dataForm">
-            <label for="value">Value</label>
-            <input onChange={this.getValue} name="value" type="number" required/>
-            {error}
-            <button type="submit" onClick={this.submit}>Submit</button>
-        </form>
-    </div>
+      <div>
+        {modalForm}
+      </div>
     );
   }
 }

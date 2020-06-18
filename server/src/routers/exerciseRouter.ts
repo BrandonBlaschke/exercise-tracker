@@ -132,7 +132,7 @@ exerciseRouter.patch('/exercise', auth, async (req: any, res: any) => {
         if (!exercise) {
             res.status(400).send()
         }
-
+        
         exercise?.updateDataPoint(req.body.name, req.body.dataPoint, req.body.unit);
         res.status(200).send();
     } catch (e) {

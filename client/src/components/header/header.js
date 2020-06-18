@@ -3,6 +3,7 @@ import './header.css';
 import axios from 'axios'
 import Modal from '../modal/modal';
 import ModalAddExer from '../modal-add-exercise/modalAddExer';
+import ModalError from '../modal-error/modalError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPlus, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom'
@@ -14,18 +15,10 @@ class Header extends Component {
         super(props);
         
         this.state = {
-          modalOpen: false
+          modalOpen: false,
+          error: false
         }
       }
-    
-    showHideMenu = (event) => {
-        let enableMenu = !this.state.enableMenu;
-        if (enableMenu) {
-            this.setState({enableMenu, buttonText: "☰"});
-        } else {
-            this.setState({enableMenu, buttonText: "🞬"});
-        }
-    }
 
     toggleModal = () => {
         this.setState({modalOpen: !this.state.modalOpen});
@@ -39,14 +32,22 @@ class Header extends Component {
 
         axios.post('/user/logout', {}, headers)
         .then((res) => {
+            this.setState({error: false});
             this.props.history.push('/');
         })
         .catch((error) => {
-            console.log(error);
+            this.setState({error: true, modalOpen: true});
         })
     }
 
     render() {
+
+        let modal;
+        if (this.state.modalOpen && this.state.error) {
+            modal = <ModalError onClose={this.toggleModal} title="Error">Error when signing out.</ModalError>
+        } else {
+            modal = <ModalAddExer close={this.toggleModal} update={this.props.update}/>
+        }
 
         return (
             <nav>
@@ -56,7 +57,7 @@ class Header extends Component {
                     <li><a title="Sign Out" onClick={this.signOut}><FontAwesomeIcon icon={faSignOutAlt} size="2x"/></a></li>
                 </ul>
                 <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
-                    <ModalAddExer close={this.toggleModal}/>
+                    {modal}
                 </Modal>
             </nav>
         );

@@ -86,8 +86,11 @@ exerciseSchema.methods.updateDataPoint = async function(name: string, dataPoint:
     this.name = name ? name : this.name;
     this.unit = unit ? unit : this.unit;
     if (dataPoint) {
-        let index = this.dataPoints.find((dp: any) => dp._id === dataPoint._id);
-        this.dataPoints[index] = dataPoint;
+        for (let i = 0; i < this.dataPoints.length; i++) {
+            if (this.dataPoints[i]._id == dataPoint._id) {
+                this.dataPoints[i] = dataPoint;
+            }
+        }
     }
     await this.save();
 }
