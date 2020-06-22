@@ -85,7 +85,6 @@ exerciseRouter.delete('/exercise/:id', auth, async (req: any, res: any) => {
 exerciseRouter.get('/exercise/:id', auth, async (req: any, res: any) => {
     try {
         const exercises = await Exercise.findOne({"_id": req.params.id, "owner": req.user._id});
-
         if (!exercises) {
             res.status(401).send();
         }

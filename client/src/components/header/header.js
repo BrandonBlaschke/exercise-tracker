@@ -4,6 +4,7 @@ import axios from 'axios'
 import Modal from '../modal/modal';
 import ModalAddExer from '../modal-add-exercise/modalAddExer';
 import ModalError from '../modal-error/modalError';
+import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPlus, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom'
@@ -25,14 +26,15 @@ class Header extends Component {
     }
 
     signOut = () => {
+        console.log(document.cookie);
         const token = document.cookie.split(';')[0].split('=')[1]
+        console.log(document.cookie);
         const headers = {
             headers: {Authorization: `Bearer ${token}`}
         }
 
         axios.post('/user/logout', {}, headers)
         .then((res) => {
-            this.setState({error: false});
             this.props.history.push('/');
         })
         .catch((error) => {
@@ -64,4 +66,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default withRouter(Header);
