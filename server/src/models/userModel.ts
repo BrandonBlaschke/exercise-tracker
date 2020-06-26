@@ -4,11 +4,6 @@ import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
     email: {
         type: String,
         required: true,
@@ -40,7 +35,6 @@ const userSchema = new mongoose.Schema({
 
 interface IUserSchema extends mongoose.Document {
     generateAuthToken(): string,
-    name: string,
     email: string,
     password: string,
 }

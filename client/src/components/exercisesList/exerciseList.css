@@ -1,0 +1,48 @@
+
+.courses-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin: .5em;
+}
+
+.exercise {
+	background-color: #fff;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100vw;
+	margin: 20px;
+	width: 700px;
+	color: rgb(116, 116, 116);
+  	flex-direction: column;
+}
+
+
+.exercise-info {
+	display: flex;
+	cursor: pointer;
+}
+
+.exercise-name {
+	flex-grow: 1
+}
+
+.exercise-buttons {
+	display: flex;
+	justify-content: space-between;
+}
+
+.exercise span {
+	margin: 1em 1em 0em 1em;
+  	font-size: 1.3em;
+}
+
+.exercise-buttons span {
+	margin: .5em 1em;
+}
+
+.exercise-buttons span:hover {
+	color: #05386b;
+	cursor: pointer;
+}

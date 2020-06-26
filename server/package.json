@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc && node ./build/index.js",
-    "start-dev": "env-cmd -f ./config/dev.env nodemon -e ts  --exec \"npm run compile\"",
+    "start-dev": "(cd ../client && npm run build) & (cd ../server & env-cmd -f ./config/dev.env nodemon -e ts  --exec \"npm run compile\")",
     "tsc": "tsc",
     "build": "tsc"
   },
