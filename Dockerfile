@@ -2,8 +2,8 @@ FROM node:latest
 WORKDIR /usr/src
 
 ENV PORT=3000
-ENV MONGODB_URL=mongodb+srv://exercise-tracker:pzsD9lpD0zXQjsq%21itG%29@cluster0-kt6dd.mongodb.net/data?retryWrites=true&w=majority
-ENV JWT_SECRET=jddfj&^$#@sNFj
+ENV MONGODB_URL=
+ENV JWT_SECRET=
 
 COPY ./server ./server
 COPY ./client ./client
