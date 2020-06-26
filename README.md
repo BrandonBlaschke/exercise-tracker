@@ -1,4 +1,6 @@
 # Exercise Tracker 
 Track exercise progression 
 
-...in development
+- React Front End
+- Express.js Back End
+- Mongodb Database
