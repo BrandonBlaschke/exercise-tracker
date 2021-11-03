@@ -30,6 +30,6 @@
     "mongoose": "^5.9.15",
     "type-doc": "^0.1.41",
     "typescript": "^3.9.3",
-    "validator": "^13.0.0"
+    "validator": "^13.7.0"
   }
 }
